@@ -22,3 +22,17 @@ model = whisper.load_model("large", device=device)
 print(f"Model loaded on: {next(model.parameters()).device}")
 
 
+# STEP 6: Transcribe the audio file with GPU acceleration
+audio_path = list(uploaded.keys())[0]
+print("Starting transcription...")
+
+# تنظیمات اضافی برای بهبود دقت و سرعت
+result = model.transcribe(
+    audio_path,
+    fp16=(device == "cuda"),  # استفاده از محاسبات 16 بیتی اگر GPU موجود باشد
+    #language='fa'  # مشخص کردن زبان فارسی برای دقت بیشتر (اختیاری)
+)
+
+transcript = result["text"]
+print("Transcription completed!")
+
