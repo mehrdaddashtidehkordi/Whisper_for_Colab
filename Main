@@ -35,4 +35,16 @@ result = model.transcribe(
 
 transcript = result["text"]
 print("Transcription completed!")
+# STEP 7: Save transcription to a Word (.docx) file
+doc = Document()
+doc.add_heading("Audio Transcription", 0)
+doc.add_paragraph(transcript)
+
+docx_filename = "transcription_output.docx"
+doc.save(docx_filename)
+
+# STEP 8: Download the .docx file
+files.download(docx_filename)
+
+print("Process completed successfully!")
 
