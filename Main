@@ -1,0 +1,18 @@
+# STEP 1: Install dependencies
+!pip install git+https://github.com/openai/whisper.git
+!pip install python-docx
+!sudo apt update && sudo apt install ffmpeg
+
+# STEP 2: Import libraries
+import whisper
+from google.colab import files
+from docx import Document
+import torch
+
+# STEP 3: Check GPU availability and set device
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print(f"Using device: {device}")
+
+# STEP 4: Upload your audio file
+uploaded = files.upload()
+
