@@ -8,10 +8,12 @@ GPU acceleration (if available)
 High-accuracy transcription using the large Whisper model
 Export transcription as a .docx (Word) file
 Easy file upload & download in Google Colab
+
 *** Requirements
-Google Colab environment
+Google Colab environment (https://colab.research.google.com)
 Python 3.x
 GPU (optional but recommended)
+
 
  ***Installation
 
