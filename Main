@@ -3,6 +3,12 @@
 !pip install python-docx
 !sudo apt update && sudo apt install ffmpeg
 
+
+import whisper
+from google.colab import files
+from docx import Document
+import torch
+
 # STEP 2: Import libraries
 import whisper
 from google.colab import files
