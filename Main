@@ -10,6 +10,7 @@ from docx import Document
 import torch
 
 # STEP 3: Check GPU availability and set device
+device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"Using device: {device}")
 
 # STEP 4: Upload your audio file
