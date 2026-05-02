@@ -1,50 +1,62 @@
 # STEP 1: Install dependencies
 !pip install git+https://github.com/openai/whisper.git
-!pip install python-docx
+!pip install python-docx fpdf
 !sudo apt update && sudo apt install ffmpeg
 
 # STEP 2: Import libraries
 import whisper
 from google.colab import files
-from docx import Document
 import torch
+from fpdf import FPDF
+import os
 
-# STEP 3: Check GPU availability and set device
+# STEP 3: Check GPU availability
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(f"Using device: {device}")
 
-# STEP 4: Upload your audio file
+# STEP 4: Upload audio file
 uploaded = files.upload()
 
-# STEP 5: Load Whisper model on appropriate device
-# استفاده از مدل large برای دقت بیشتر (با GPU سریعتر خواهد بود)
+# STEP 5: Load Whisper model
 model = whisper.load_model("large", device=device)
 print(f"Model loaded on: {next(model.parameters()).device}")
 
-
-# STEP 6: Transcribe the audio file with GPU acceleration
+# STEP 6: Transcribe with German language setting
 audio_path = list(uploaded.keys())[0]
 print("Starting transcription...")
 
-# تنظیمات اضافی برای بهبود دقت و سرعت
 result = model.transcribe(
     audio_path,
-    fp16=(device == "cuda"),  # استفاده از محاسبات 16 بیتی اگر GPU موجود باشد
-    #language='fa'  # مشخص کردن زبان فارسی برای دقت بیشتر (اختیاری)
+    fp16=(device == "cuda"),
+    language='de',  # for German - en for English
+    task='transcribe'
 )
 
 transcript = result["text"]
 print("Transcription completed!")
-# STEP 7: Save transcription to a Word (.docx) file
-doc = Document()
-doc.add_heading("Audio Transcription", 0)
-doc.add_paragraph(transcript)
 
-docx_filename = "transcription_output.docx"
-doc.save(docx_filename)
+# STEP 7: Create and save PDF
+pdf = FPDF()
+pdf.add_page()
 
-# STEP 8: Download the .docx file
-files.download(docx_filename)
+# support German chars
+pdf.add_font('DejaVu', '', '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', uni=True)
+pdf.add_font('DejaVu', 'B', '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', uni=True)
+
+# title
+pdf.set_font('DejaVu', 'B', 16)
+pdf.cell(0, 10, 'Audio Transcription', ln=True, align='C')
+pdf.ln(10)
+
+# main text
+pdf.set_font('DejaVu', '', 12)
+pdf.multi_cell(0, 10, transcript)
+
+# save file
+pdf_filename = "transcription_output.pdf"
+pdf.output(pdf_filename)
+
+# STEP 8: Download PDF
+files.download(pdf_filename)
 
 print("Process completed successfully!")
-
