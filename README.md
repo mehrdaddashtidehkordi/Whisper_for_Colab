@@ -14,7 +14,6 @@ Google Colab environment (https://colab.research.google.com)
 Python 3.x
 GPU (optional but recommended)
 
-
  ***Installation
 
 Run the following commands:
@@ -29,13 +28,12 @@ The model will transcribe the audio
 A .docx file will be generated and downloaded automatically
 *** Notes
 The large model provides higher accuracy but requires more resources.
-
 You can specify the language manually for better results:
 
 language='en'
 GPU significantly speeds up processing.
 *** Output
-transcription_output.docx → Contains the transcribed text
+transcription_output.pdf → Contains the transcribed text
 *** Example Workflow
 
 Upload → Transcribe → Generate Word File → Download
