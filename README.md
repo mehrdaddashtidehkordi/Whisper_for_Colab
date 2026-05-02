@@ -25,7 +25,7 @@ sudo apt update && sudo apt install ffmpeg
 Run the notebook in Google Colab
 Upload your audio file when prompted
 The model will transcribe the audio
-A .docx file will be generated and downloaded automatically
+A .pdf file will be generated and downloaded automatically
 *** Notes
 The large model provides higher accuracy but requires more resources.
 You can specify the language manually for better results:
